@@ -35,4 +35,17 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Telegram Bot (Aegis Filter Moderador)
+    |--------------------------------------------------------------------------
+    | Configuración del bot de Telegram para moderación automática.
+    | El bot analiza mensajes en grupos y elimina spam en tiempo real.
+    */
+    'telegram' => [
+        'bot_token'      => env('TELEGRAM_BOT_TOKEN'),
+        'webhook_secret' => env('TELEGRAM_WEBHOOK_SECRET'),
+        'api_base_url'   => 'https://api.telegram.org/bot',
+    ],
+
 ];

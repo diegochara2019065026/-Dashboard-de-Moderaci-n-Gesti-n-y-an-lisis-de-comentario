@@ -7,6 +7,7 @@ use App\Services\SpamFilterService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 
 /**
  * CommentController – Controlador de Comentarios del Foro
@@ -188,5 +189,92 @@ class CommentController extends Controller
         return redirect()
             ->route('dashboard')
             ->with('success', "🗑️ Comentario #{$id} eliminado correctamente.");
+    }
+
+    // ══════════════════════════════════════════════════
+    // POST /api/comments – Enviar comentario vía API
+    // ══════════════════════════════════════════════════
+
+    public function apiStore(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'author'  => ['required', 'string', 'min:2', 'max:100'],
+            'email'   => ['nullable', 'email', 'max:150'],
+            'content' => ['required', 'string', 'min:10', 'max:2000'],
+        ]);
+
+        $result = $this->spamFilter->analyze(
+            content: $validated['content'],
+            author:  $validated['author']
+        );
+
+        $status = $result['isSpam'] ? 'spam' : 'approved';
+
+        $comment = Comment::create([
+            'author'      => $validated['author'],
+            'email'       => $validated['email'] ?? null,
+            'content'     => $validated['content'],
+            'status'      => $status,
+            'spam_reason' => $result['reason'] ?? null,
+            'ip_address'  => $request->ip(),
+        ]);
+
+        return response()->json([
+            'success'    => true,
+            'comment_id' => $comment->id,
+            'status'     => $status,
+            'isSpam'     => $result['isSpam'],
+            'score'      => $result['score'],
+            'message'    => $result['isSpam']
+                ? '⚠️ Tu comentario fue marcado como posible spam y está pendiente de revisión.'
+                : '✅ ¡Tu comentario fue enviado y está pendiente de aprobación!',
+        ], 201);
+    }
+
+    // ══════════════════════════════════════════════════
+    // GET /api/comments – Listar comentarios aprobados
+    // ══════════════════════════════════════════════════
+
+    public function apiIndex(): JsonResponse
+    {
+        $comments = Comment::where('status', 'approved')
+            ->latest()
+            ->paginate(10);
+
+        return response()->json([
+            'data'       => $comments->map(fn($c) => [
+                'id'         => $c->id,
+                'author'     => $c->author,
+                'content'    => $c->content,
+                'created_at' => $c->created_at->toIso8601String(),
+            ]),
+            'total'       => $comments->total(),
+            'current_page'=> $comments->currentPage(),
+            'last_page'   => $comments->lastPage(),
+        ]);
+    }
+
+    // ══════════════════════════════════════════════════
+    // POST /api/check-spam – Verificar spam sin guardar
+    // ══════════════════════════════════════════════════
+
+    public function checkSpam(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'author'  => ['required', 'string', 'min:2', 'max:100'],
+            'content' => ['required', 'string', 'min:10', 'max:2000'],
+        ]);
+
+        $result = $this->spamFilter->analyze(
+            content: $validated['content'],
+            author:  $validated['author']
+        );
+
+        return response()->json([
+            'isSpam' => $result['isSpam'],
+            'score'  => $result['score'],
+            'reason' => $result['reason'],
+            'detail' => $result['detail'],
+        ]);
     }
 }
