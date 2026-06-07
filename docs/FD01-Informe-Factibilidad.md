@@ -1,8 +1,11 @@
 <center>
 
+
 [comment]: <img src="./media/media/image1.png" style="width:1.088in;height:1.46256in" alt="escudo.png" />
 
+
 ![./media/media/image1.png](../media/logo-upt.png)
+
 
 **UNIVERSIDAD PRIVADA DE TACNA**
 
@@ -184,7 +187,7 @@ El mayor impacto económico del proyecto recae en el alojamiento en la nube. Par
 
 | Aspecto Legal | Descripción | Cumplimiento |
 |--------------|------------|-------------|
-| Propiedad Intelectual | Uso de tecnologías de código abierto (Laravel, Docker, Terraform) que no requieren licencias de pago. | Cumple |
+| Propiedad Intelectual | Uso de tecnologías de código abierto (Laravel, Docker, Terraform) que no requieren licencias de pago | Cumple |
 | Protección de Datos | El procesamiento de comentarios cumple normativas básicas de privacidad (datos simulados). | Cumple |
 
 ---

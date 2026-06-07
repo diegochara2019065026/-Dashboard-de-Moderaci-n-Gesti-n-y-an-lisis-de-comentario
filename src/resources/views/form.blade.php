@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
+
         /* ════════════════════════════════════════════
            Aegis Filter – Design System
            Tech Hub Forum | Formulario de Comentarios
@@ -57,7 +58,7 @@
                 radial-gradient(ellipse at 80% 90%, rgba(6,182,212,0.06) 0%, transparent 60%);
         }
 
-        /* ─── Header ──────────────────────────────────── */
+        /* ─── Header ─────────────────────────────────── */
         .header {
             padding: 1.5rem 2rem;
             border-bottom: 1px solid var(--color-border);

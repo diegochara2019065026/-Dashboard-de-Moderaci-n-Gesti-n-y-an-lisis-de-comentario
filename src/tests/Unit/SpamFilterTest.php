@@ -1,11 +1,11 @@
 <?php
 
 namespace Tests\Unit;
-
 use App\Services\SpamFilterService;
 use PHPUnit\Framework\TestCase;
 
 /**
+ *
  * SpamFilterTest – Suite de Pruebas BDD para SpamFilterService
  *
  * Metodología: Behavior-Driven Development (BDD)
@@ -21,6 +21,7 @@ use PHPUnit\Framework\TestCase;
  *
  * Curso: SI784 – Calidad y Pruebas de Software
  * Proyecto: Aegis Filter | Tech Hub Forum
+ *
  */
 class SpamFilterTest extends TestCase
 {

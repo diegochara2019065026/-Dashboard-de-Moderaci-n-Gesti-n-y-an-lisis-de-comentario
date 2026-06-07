@@ -27,6 +27,7 @@ Integrantes:
 
 ---
 
+
 Sistema Antispam  
 **Documento de Especificación de Requerimientos de Software**  
 Versión 1.0  
@@ -211,9 +212,9 @@ flowchart TD
 
 | ID | Descripción | Prioridad |
 |---|---|---|
-| RNF-01 | El sistema debe estar desplegado en Microsoft Azure para garantizar un acceso constante vía web. | Muy Alta |
-| RNF-02 | La infraestructura debe ser gestionada mediante Terraform (IaC) para asegurar configuraciones de red cerradas (puerto 3306 bloqueado al exterior). | Alta |
-| RNF-03 | La aplicación debe estar contenedorizada en Docker para facilitar actualizaciones inmutables. | Alta |
+| RNF-01 | El sistema debe estar desplegado en Microsoft Azure para garantizar un acceso constante vía web | Muy Alta |
+| RNF-02 | La infraestructura debe ser gestionada mediante Terraform (IaC) para asegurar configuraciones de red cerradas (puerto 3306 bloqueado al exterior) | Alta |
+| RNF-03 | La aplicación debe estar contenedorizada en Docker para facilitar actualizaciones inmutables | Alta |
 
 ## 4.3. Cuadro de Requerimientos funcionales Final
 

@@ -290,6 +290,7 @@
             </a>
         </div>
 
+        
         {{-- ─── Tabla de Comentarios ─────────── --}}
         <div class="table-card">
             <div class="table-header">

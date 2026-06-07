@@ -144,7 +144,9 @@ terraform output public_ip_address
 | `DOCKER_USERNAME` | Usuario Docker Hub |
 | `DOCKER_PASSWORD` | Contraseña/token Docker Hub |
 
+
 ---
+
 
 ## 👥 Equipo
 

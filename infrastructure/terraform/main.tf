@@ -202,6 +202,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 }
 
+#
 # ─── Outputs ──────────────────────────────────────────
 output "public_ip_address" {
   description = "IP pública de la VM"

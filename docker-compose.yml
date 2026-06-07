@@ -1,12 +1,13 @@
 ########################################################
+#
 # Aegis Filter – Docker Compose
 # Servicios: app (Laravel) + db (MySQL 8) + phpmyadmin
+#
 ########################################################
-
 version: "3.9"
 
 services:
-  # ─── Aplicación Laravel ─────────────────────────────
+  # ─── Aplicación Laravel ────────────────────────────
   app:
     build:
       context: .
@@ -44,7 +45,7 @@ services:
     networks:
       - aegisfilter_network
 
-  # ─── Base de Datos MySQL 8 ──────────────────────────
+  # ─── Base de Datos MySQL 8 ─────────────────────────
   db:
     image: mysql:8.0
     container_name: aegisfilter_db
@@ -70,7 +71,7 @@ services:
     networks:
       - aegisfilter_network
 
-  # ─── PHPMyAdmin (herramienta de administración) ─────
+  # ─── PHPMyAdmin (herramienta de administración) ───
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     container_name: aegisfilter_phpmyadmin
@@ -88,14 +89,14 @@ services:
     networks:
       - aegisfilter_network
 
-# ─── Volúmenes ────────────────────────────────────────
+# ─── Volúmenes ───────────────────────────────────────
 volumes:
   db_data:
     driver: local
   storage_data:
     driver: local
 
-# ─── Red ──────────────────────────────────────────────
+# ─── Red ─────────────────────────────────────────────
 networks:
   aegisfilter_network:
     driver: bridge

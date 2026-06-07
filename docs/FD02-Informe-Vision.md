@@ -2,6 +2,7 @@
 
 ![Logo UPT](../media/logo-upt.png)
 
+
 **UNIVERSIDAD PRIVADA DE TACNA**
 
 **FACULTAD DE INGENIERÍA**
@@ -22,6 +23,7 @@ Integrantes:
 **Tacna – Perú**
 
 **2026**
+
 
 </center>
 
@@ -243,3 +245,5 @@ Se demuestra que el proyecto Aegis Filter está rígidamente estructurado bajo e
 * Guías de GitHub Actions y Wikis: https://docs.github.com/es
 * Documentación de calidad de código en SonarCloud: https://docs.sonarsource.com/sonarcloud/
 * Auditoría de seguridad con Snyk: https://docs.snyk.io/
+
+  
