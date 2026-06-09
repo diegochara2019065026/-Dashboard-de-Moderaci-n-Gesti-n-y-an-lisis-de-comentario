@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - main
-      - master
   pull_request:
+    branches:
+      - main
     types: [opened, synchronize, reopened]
 
 jobs:
@@ -20,7 +21,7 @@ jobs:
           fetch-depth: 0
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -29,3 +30,4 @@ jobs:
             -Dsonar.organization=cristhian465-sonar-cloud
             -Dsonar.projectKey=proyecto-si784-2026-i-u1-antispam
             -Dsonar.projectName=proyecto-si784-2026-i-u1-antispam
+            -Dsonar.branch.name=main
