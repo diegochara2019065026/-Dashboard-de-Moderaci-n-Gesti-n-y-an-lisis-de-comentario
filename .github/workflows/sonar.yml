@@ -1,33 +1,5 @@
 name: SonarCloud
-on:
-  push:
-    branches:
-      - main
-      - master - No está configurado
-- ❌ **sonar.organization** - No está configurado
 
-## Solución
-
-Necesitas modific
-  pull_request:
-    types: [opened, synchronize, reopened]
-
-jobs:
-  sonarcloud:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        ar tu archivo `.github/workflows/sonar.yml` para incluir estos valores. Reemplaza el contenido con:
-
-```yaml
-name: Swith:
-          fetch-depth: 0
-      
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.onarCloud
 on:
   push:
     branches:
@@ -38,19 +10,14 @@ on:
 
 jobs:
   sonarcloud:
-    runsSONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarcloud.io
-          SONAR_ORG: cristhian465-so-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: SonarCloud Scan
-        uses: SonarSource/sonarclounar-cloud
-          SONAR_PROJECT_KEY: proyecto-si784-2d-github-action@master
+        uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarcloud.io
-        with026-i-u1-antispam
