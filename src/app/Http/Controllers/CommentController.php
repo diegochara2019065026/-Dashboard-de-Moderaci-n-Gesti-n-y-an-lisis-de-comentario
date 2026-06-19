@@ -277,4 +277,37 @@ class CommentController extends Controller
             'detail' => $result['detail'],
         ]);
     }
+
+    // ══════════════════════════════════════════════════
+    // POST /api/analyze – Endpoint simplificado (Alexa Bridge)
+    // ══════════════════════════════════════════════════
+
+    /**
+     * Analizar un texto y retornar si es spam.
+     *
+     * Endpoint simplificado diseñado para el microservicio
+     * Alexa Bridge. Recibe solo el texto a analizar y retorna
+     * un resultado binario (is_spam: true/false).
+     *
+     * Payload:  {"text": "texto a analizar"}
+     * Response: {"is_spam": true} o {"is_spam": false}
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function analyzeText(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'text' => ['required', 'string', 'min:1', 'max:5000'],
+        ]);
+
+        $result = $this->spamFilter->analyze(
+            content: $validated['text'],
+            author:  'alexa-bridge'
+        );
+
+        return response()->json([
+            'is_spam' => $result['isSpam'],
+        ]);
+    }
 }

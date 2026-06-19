@@ -1,0 +1,84 @@
+########################################################
+#
+# Aegis Filter – Docker Compose (Alexa Bridge Snippet)
+#
+# Este archivo muestra cómo declarar el servicio
+# alexa-bridge y conectarlo a la misma red interna
+# donde ya vive el contenedor de Aegis Core (Laravel).
+#
+# USO: Copiar la definición del servicio 'alexa-bridge'
+# al docker-compose.yml principal del proyecto, o
+# ejecutar ambos archivos con:
+#
+#   docker compose -f docker-compose.yml \
+#                  -f alexa-bridge/docker-compose.yml up -d
+#
+########################################################
+
+version: "3.9"
+
+services:
+  # ─── Alexa Bridge (Nuevo Microservicio) ──────────
+  alexa-bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aegisfilter_alexa_bridge
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      # URL interna del Aegis Core dentro de la red Docker.
+      # 'app' es el nombre del servicio Laravel en el
+      # docker-compose.yml principal (puerto 80 = Apache).
+      AEGIS_CORE_URL: "http://app:80/api/analyze"
+
+      # Skill ID de tu Alexa Skill (obtenerlo de la consola
+      # de Amazon Developer). Dejar vacío para omitir check.
+      ALEXA_SKILL_ID: "${ALEXA_SKILL_ID:-}"
+
+      # Activar/desactivar verificación de firma.
+      # Usar 'false' solo en desarrollo local.
+      VERIFY_SIGNATURES: "${VERIFY_SIGNATURES:-true}"
+
+      # Timeout en segundos para consultas al Aegis Core
+      AEGIS_REQUEST_TIMEOUT: "10"
+    depends_on:
+      - app
+    networks:
+      - aegisfilter_network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # ─── (Referencia) Aegis Core – Ya existe ─────────
+  # Este servicio ya está declarado en el
+  # docker-compose.yml principal del proyecto.
+  # Se incluye aquí solo como referencia.
+  #
+  # app:
+  #   build:
+  #     context: ..
+  #     dockerfile: Dockerfile
+  #   container_name: aegisfilter_app
+  #   ports:
+  #     - "80:80"
+  #   networks:
+  #     - aegisfilter_network
+
+# ─── Red compartida ──────────────────────────────
+# La misma red que usa el docker-compose.yml principal.
+# Si se ejecuta como archivo independiente, se crea aquí.
+# Si se usa con -f, Docker Compose fusiona las redes.
+networks:
+  aegisfilter_network:
+    driver: bridge

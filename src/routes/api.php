@@ -33,6 +33,11 @@ Route::get('/comments', [CommentController::class, 'apiIndex'])
 Route::post('/check-spam', [CommentController::class, 'checkSpam'])
     ->name('api.check-spam');
 
+// Endpoint simplificado para Alexa Bridge
+// Recibe: {"text": "..."} → Devuelve: {"is_spam": true/false}
+Route::post('/analyze', [CommentController::class, 'analyzeText'])
+    ->name('api.analyze');
+
 // ─── Rutas del Bot de Telegram ────────────────────────
 
 // Webhook: Telegram envía updates aquí automáticamente

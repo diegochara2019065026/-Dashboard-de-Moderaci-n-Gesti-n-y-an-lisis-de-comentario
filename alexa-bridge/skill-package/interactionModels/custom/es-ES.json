@@ -1,0 +1,44 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "filtro antispam",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "CheckSpamIntent",
+          "slots": [
+            {
+              "name": "Mensaje",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "analiza el mensaje {Mensaje}",
+            "analiza esto {Mensaje}",
+            "verifica si es spam {Mensaje}",
+            "revisa el texto {Mensaje}",
+            "comprueba el mensaje {Mensaje}",
+            "es spam {Mensaje}",
+            "filtra el mensaje {Mensaje}"
+          ]
+        }
+      ],
+      "types": []
+    }
+  }
+}

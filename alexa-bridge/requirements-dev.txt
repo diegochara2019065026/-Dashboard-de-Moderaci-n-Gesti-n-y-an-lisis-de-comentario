@@ -1,0 +1,9 @@
+########################################################
+# Aegis Filter – Alexa Bridge Dev Dependencies
+# Solo para testing local / CI, no se instalan en producción.
+########################################################
+
+-r requirements.txt
+
+pytest>=7.4.0
+respx>=0.20.2

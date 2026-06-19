@@ -89,6 +89,48 @@ services:
     networks:
       - aegisfilter_network
 
+  # ─── Alexa Bridge (Nuevo Microservicio) ──────────
+  alexa-bridge:
+    build:
+      context: ./alexa-bridge
+      dockerfile: Dockerfile
+    container_name: aegisfilter_alexa_bridge
+    restart: unless-stopped
+    ports:
+      - "8090:8080"
+    environment:
+      # URL interna del Aegis Core dentro de la red Docker.
+      # 'app' es el nombre del servicio Laravel en este compose (puerto 80 = Apache).
+      AEGIS_CORE_URL: "http://app:80/api/analyze"
+
+      # Skill ID de tu Alexa Skill (obtenerlo de la consola de Amazon Developer).
+      # Se puede definir en un archivo .env en el VPS.
+      ALEXA_SKILL_ID: "${ALEXA_SKILL_ID:-}"
+
+      # Activar/desactivar verificación de firma.
+      # Usar 'true' en producción (VPS) y 'false' para pruebas locales (sin HTTPS).
+      VERIFY_SIGNATURES: "${VERIFY_SIGNATURES:-true}"
+
+      # Timeout en segundos para consultas al Aegis Core
+      AEGIS_REQUEST_TIMEOUT: "10"
+    depends_on:
+      - app
+    networks:
+      - aegisfilter_network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8080/health')",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+
 # ─── Volúmenes ───────────────────────────────────────
 volumes:
   db_data:

@@ -46,3 +46,15 @@ src/composer.phar
 
 # Generated
 src/graph.png
+
+# Python
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/*.pyd
+.pytest_cache/
+.venv/
+venv/
+ENV/
+env/
+

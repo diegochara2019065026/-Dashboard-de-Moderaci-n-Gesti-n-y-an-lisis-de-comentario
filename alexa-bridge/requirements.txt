@@ -1,0 +1,17 @@
+########################################################
+# Aegis Filter – Alexa Bridge Dependencies
+# Microservicio intermediario Alexa ↔ Aegis Core
+########################################################
+
+# ─── Web Framework ────────────────────────────────────
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+
+# ─── Amazon Alexa Skills Kit SDK ──────────────────────
+ask-sdk-core>=1.19.0
+
+# ─── HTTP Client (comunicación con Aegis Core) ───────
+httpx>=0.24.0
+
+# ─── Criptografía (verificación de firmas Amazon) ────
+cryptography>=42.0.0
