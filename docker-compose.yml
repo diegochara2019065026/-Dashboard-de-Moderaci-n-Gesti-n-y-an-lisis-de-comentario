@@ -16,7 +16,9 @@ services:
     container_name: aegisfilter_app
     restart: unless-stopped
     ports:
-      - "80:80"
+      # En VPS con Caddy: cambiar APP_HTTP_PORT (en .env) a un puerto libre,
+      # ya que Caddy ocupará el 80/443 del host. En local se deja en 80.
+      - "${APP_HTTP_PORT:-80}:80"
     environment:
       APP_NAME: "Aegis Filter"
       APP_ENV: local
@@ -97,7 +99,9 @@ services:
     container_name: aegisfilter_alexa_bridge
     restart: unless-stopped
     ports:
-      - "8090:8080"
+      # Acceso directo solo para depuración; el tráfico público real
+      # pasa por Caddy con TLS. En VPS: usar "127.0.0.1:8090" en .env.
+      - "${ALEXA_BRIDGE_BIND:-8090}:8080"
     environment:
       # URL interna del Aegis Core dentro de la red Docker.
       # 'app' es el nombre del servicio Laravel en este compose (puerto 80 = Apache).
@@ -130,12 +134,40 @@ services:
       retries: 3
       start_period: 10s
 
+  # ─── Caddy (Reverse Proxy + HTTPS automático) ─────
+  # Solo para el VPS de producción: levantar con
+  #   docker compose --profile proxy up -d
+  caddy:
+    image: caddy:2-alpine
+    container_name: aegisfilter_caddy
+    restart: unless-stopped
+    profiles:
+      - proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      CADDY_ACME_EMAIL: "${CADDY_ACME_EMAIL:-admin@example.com}"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+      - alexa-bridge
+    networks:
+      - aegisfilter_network
+
 
 # ─── Volúmenes ───────────────────────────────────────
 volumes:
   db_data:
     driver: local
   storage_data:
+    driver: local
+  caddy_data:
+    driver: local
+  caddy_config:
     driver: local
 
 # ─── Red ─────────────────────────────────────────────

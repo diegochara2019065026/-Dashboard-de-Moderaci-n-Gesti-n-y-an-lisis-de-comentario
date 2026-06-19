@@ -1,0 +1,21 @@
+########################################################
+# Aegis Filter – Caddyfile
+# Reverse proxy + HTTPS automático (Let's Encrypt) para
+# el endpoint público que Amazon Alexa necesita.
+########################################################
+{
+	email {$CADDY_ACME_EMAIL}
+}
+
+# ─── Alexa Bridge – dominio público con TLS automático ───
+# Amazon exige HTTPS con certificado de una CA confiable
+# para los Custom Endpoints de Alexa Skills.
+alexa.sytes.net {
+	reverse_proxy alexa-bridge:8080
+}
+
+# ─── Resto del tráfico (acceso directo por IP al foro) ───
+# Sin dominio propio todavía, por eso solo HTTP en este bloque.
+:80 {
+	reverse_proxy app:80
+}
