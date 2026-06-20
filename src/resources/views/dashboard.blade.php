@@ -404,5 +404,15 @@
         </p>
     </footer>
 
+    <script>
+        // Actualiza los comentarios y estadísticas sin cambiar el filtro actual.
+        // No recarga mientras el dashboard está en segundo plano.
+        setInterval(() => {
+            if (!document.hidden) {
+                window.location.reload();
+            }
+        }, 10000);
+    </script>
+
 </body>
 </html>

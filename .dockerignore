@@ -1,0 +1,4 @@
+.git
+src/vendor
+src/storage
+src/public/storage

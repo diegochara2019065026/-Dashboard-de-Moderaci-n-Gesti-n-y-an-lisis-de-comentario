@@ -18,7 +18,7 @@ services:
     ports:
       # En VPS con Caddy: cambiar APP_HTTP_PORT (en .env) a un puerto libre,
       # ya que Caddy ocupará el 80/443 del host. En local se deja en 80.
-      - "${APP_HTTP_PORT:-80}:80"
+      - "8081:80"
     environment:
       APP_NAME: "Aegis Filter"
       APP_ENV: local
@@ -60,7 +60,7 @@ services:
       MYSQL_CHARACTER_SET_SERVER: utf8mb4
       MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
       - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
