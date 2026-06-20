@@ -10,6 +10,11 @@ echo "==================================================="
 echo "  Aegis Filter – Iniciando contenedor..."
 echo "==================================================="
 
+# Laravel requires these writable directories before clearing cached views.
+mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views
+chown -R www-data:www-data storage bootstrap/cache
+chmod -R 775 storage bootstrap/cache
+
 # Esperar que MySQL esté disponible
 echo ">> Esperando conexión a base de datos..."
 until php artisan db:show &>/dev/null; do
